@@ -85,7 +85,7 @@ void CentreFactory::displayCentreFactory()
     {
         if(centreFactory[i] != nullptr)
         {
-            cout << centreFactory[i]->getTile() << " ";
+            cout << printTile(centreFactory[i]->getTile()) << " ";
         }
     }
     cout << endl;

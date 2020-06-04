@@ -1,9 +1,8 @@
 #include "player.h"
-
 class Game
 {
     public:
-        
+
         // Constructor/Deconstructor
         Game();
         ~Game();

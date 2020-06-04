@@ -125,7 +125,7 @@ void Factory::displayFactories()
         {
             if(factories[outterLoop][innerLoop] != nullptr)
             {
-                cout << factories[outterLoop][innerLoop]->getTile() << " ";
+                cout << printTile(factories[outterLoop][innerLoop]->getTile()) << " ";
             }
             else
             {

@@ -406,11 +406,11 @@ bool Game::isTurnValid(Player* player)
             cout << "turn <factory> <colour> <storage row>" << endl;
             cout << "To intentionally break a tile:" << endl;
             cout << "turn <factory> <colour> <b>" << endl;
-            //find all available factories
-            //find all available patternlines
-            //check if tile is already in wall
-            //create a list of all available commands
-            //select 3 random commands.
+
+
+            cout << "Possible turns: " << endl;
+            //check which factories are free
+            
         }
         else if(action.compare("DISPLAY") == 0)
         {
@@ -936,7 +936,7 @@ void Game::displayMosaic(Player* player)
         {
             if(player->getPatternLines()->getPatternLine(outterLoop + 1)[outterLoop - patternLineInnerLoop] != nullptr)
             {
-                cout << player->getPatternLines()->getPatternLine(outterLoop + 1)[outterLoop - patternLineInnerLoop]->getTile() << " ";
+                cout << printTile(player->getPatternLines()->getPatternLine(outterLoop + 1)[outterLoop - patternLineInnerLoop]->getTile()) << " ";
             }
             else
             {
@@ -952,7 +952,7 @@ void Game::displayMosaic(Player* player)
         {
             if(player->getWall()->tile[outterLoop][wallInnerLoop] != nullptr)
             {
-                cout << " " << player->getWall()->tile[outterLoop][wallInnerLoop]->getTile();
+                cout << " " << printTile(player->getWall()->tile[outterLoop][wallInnerLoop]->getTile());
             }
             else
             {

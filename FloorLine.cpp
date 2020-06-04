@@ -95,7 +95,7 @@ void FloorLine::displayFloorLine()
     {
         if (deductions[i] != nullptr)
         {
-            cout << deductions[i]->getTile();
+            cout << printTile(deductions[i]->getTile());
             cout << " ";
         }
     } 
