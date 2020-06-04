@@ -1,0 +1,6 @@
+//TEST 4: STANDARD NEW GAME. PLAYER 1 TRIES TO PUT TILE IN AN INVALID LINE (LINE 7)
+2
+test4.input
+turn 1 R 7
+save test4.output
+^D

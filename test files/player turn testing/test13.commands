@@ -1,0 +1,15 @@
+//TEST 10: running through the second round of a game by breaking all tiles. should not give negative scores.
+2
+test10.input
+turn 1 R b
+turn 2 l b
+turn 3 y b
+turn 4 u b
+turn 5 b b
+turn 0 l b
+turn 0 b b
+turn 0 u b
+turn 0 r b
+turn 0 y b
+save test10.output
+^D

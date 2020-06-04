@@ -1,0 +1,6 @@
+//TEST 8: PLAYER 1 HAS 4 TILES ON LINE 5. TRIES TO PLACE ANOTHER COLOUR TILE ON THE SAME LINE.
+2
+test8.input
+turn 5 Y 5
+save test8.output
+^D

@@ -1,0 +1,15 @@
+//TEST 10: running through the first round of a game
+2
+test10.input
+turn 1 B 3
+turn 3 B 2
+turn 4 b 3
+turn 2 L 3
+turn 5 r 1
+turn 0 L 3
+turn 0 Y 2
+turn 0 U 4
+turn 0 R 4
+turn 0 B 1
+save test10.output
+^D

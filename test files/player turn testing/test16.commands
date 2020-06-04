@@ -1,0 +1,5 @@
+//TEST 16: factory 1-5 empty, but tiles in centre factory. Check that loading does not refill factories (edge test).
+2
+test16.input
+save test16.output
+^D

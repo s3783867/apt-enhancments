@@ -1,0 +1,6 @@
+//TEST 3: STANDARD NEW GAME. PLAYER 1 PICKS A COLOUR WHICH IS NOT IN THE CHOSEN FACTORY.
+2
+test3.input
+turn 1 B 4
+save test3.output
+^D

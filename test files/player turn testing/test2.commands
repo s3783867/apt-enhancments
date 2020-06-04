@@ -1,0 +1,6 @@
+//TEST 2: STANDARD NEW GAME. PLAYER 1 PICKS FACTORY 7 (INVALID FACTORY NUMBER)
+2
+test2.input
+turn 7 R 4
+save test2.output
+^D

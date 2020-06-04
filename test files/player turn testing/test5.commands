@@ -1,0 +1,6 @@
+//TEST 5: FACTORY 1 ALREADY EMPTY. PLAYER 2 TRIES TO PICK A TILE FROM EMPTY FACTORY.
+2
+test5.input
+turn 1 R 4
+save test5.output
+^D

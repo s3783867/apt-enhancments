@@ -1,0 +1,6 @@
+//TEST1. STANDARD NEW GAME. PLAYER 1 TAKES 1 VALID TURN
+2
+test1.input
+turn 1 R 4
+save test1.output
+^D

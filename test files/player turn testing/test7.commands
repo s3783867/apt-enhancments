@@ -1,0 +1,6 @@
+//TEST 7: PLAYER 1 HAS FULL LINE ON LINE3. TRIES TO PLACE TILE ON FULL LINE.
+2
+test7.input
+turn 3 R 3
+save test7.output
+^D
