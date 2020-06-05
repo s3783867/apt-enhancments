@@ -55,8 +55,8 @@ void Game::playerTurn(Player* player)
 
     // DISPLAY MOSAIC
     int otherPlayer = (playerIterator + 1) % 2;
-    cout << "Mosaic for: " << print_as_color<ansi_color_code::bright_green>(player->getName()) << ":" << "                ";
-    cout << "Mosaic for opponent: " << print_as_color<ansi_color_code::red>(players->players[otherPlayer]->getName()) << endl;
+    cout << "Mosaic for " << print_as_color<ansi_color_code::bright_green>(player->getName()) << ":" << "                ";
+    cout << "Mosaic for opponent " << print_as_color<ansi_color_code::red>(players->players[otherPlayer]->getName()) << ":" << endl;
     displayMosaic(player);
     cout << endl;
 
@@ -397,45 +397,28 @@ bool Game::isTurnValid(Player* player)
             isTurnValid(player);
             turnValidated = true;
         }
-        else if(action.compare("help") == 0)
+        else if(action.compare("help") == 0 || action.compare("Help") == 0 || action.compare("HELP")==0)
         {
             cout << "Here are all the possible commands:" << endl;
-            //check if patternlines are full
-            /*
-            if(player->getPatternLines()->isPatternLineFull(player->getPatternLines()->getPatternLine(1)) || 
-                player->getPatternLines()->isPatternLineFull(player->getPatternLines()->getPatternLine(2)) || 
-                player->getPatternLines()->isPatternLineFull(player->getPatternLines()->getPatternLine(3)) ||
-                player->getPatternLines()->isPatternLineFull(player->getPatternLines()->getPatternLine(4)) ||
-                player->getPatternLines()->isPatternLineFull(player->getPatternLines()->getPatternLine(5)))
-                {
-                }
-            */
             if(!centreFactory->isCentreFactoryEmpty())
-            {
-                cout << "To take a tile from the centre factory: " << endl;
-                cout << "turn <0> <colour> <storage row>" << endl;
-            }
+                {
+                    cout << "Centre Factory: ";
+                    cout << print_as_color<ansi_color_code::bright_green>("turn <0> <colour> <storage row>") << endl;
+                }
             if(!factory->areFactoriesEmpty())
-            {
-                cout << "To take a tile from the factories: " << endl;
-                cout << "turn <factory> <colour> <storage row>" << endl;
-            }
-            cout << "To display other player game state: " << endl;
-            cout << "display" << endl;
-            cout << "To save the current game:" << endl;
-            cout << "save <file name>" << endl;
-            cout << "To make a turn:" << endl;
-            cout << "To intentionally break a tile:" << endl;
-            cout << "turn <factory> <colour> <b>" << endl;
-
-
-            cout << "Possible turns: " << endl;
-            isTurnValid(player);
-            turnValidated = true;
-            //check if factories are all empty
-            //check if centre factory are all empty
-            
+                 {
+                    cout << "Factories     : ";
+                    cout << print_as_color<ansi_color_code::bright_green>("turn <factory number> <colour> <storage row>") << endl;
+                }
+                
+                cout << "Save Game     : ";
+                cout << print_as_color<ansi_color_code::bright_green>("save <file name>") << endl;
+                cout << "Break Tile    : ";
+                cout << print_as_color<ansi_color_code::bright_green>("turn <factory number> <colour> <b>") << endl;
+                isTurnValid(player);
+                turnValidated = true;
         }
+
         else if(action.compare("TURN") == 0)
         {
             
@@ -718,13 +701,7 @@ bool Game::getTurn()
         exit(1);
     }
 
-    if(s.compare("help") == 0)
-    {
-        *actionPtr = s;
-        turnGot = true;
-    }
-
-    if(s.compare("display") == 0)
+    if(s.compare("help") == 0 || s.compare("Help") == 0 || s.compare("HELP") == 0)
     {
         *actionPtr = s;
         turnGot = true;
@@ -794,9 +771,7 @@ bool Game::getTurn()
 
     // ENSURE CORRECT NUMBER OF RESPONSES
     // TODO: POSSIBLE MORE CONSTRAINTS
-    if((vect.size() == 4 && vect[0].compare("TURN") == 0 && isdigit(vect[1][0]) && isalpha(vect[2].front()) && (isdigit(vect[3][0]) 
-        || vect[3].compare("B") == 0 )) 
-        || (vect.size() == 2 && vect[0].compare("SAVE") == 0))
+    if((vect.size() == 4 && vect[0].compare("TURN") == 0 && isdigit(vect[1][0]) && isalpha(vect[2].front()) && (isdigit(vect[3][0]) || vect[3].compare("B") == 0 )) || (vect.size() == 2 && vect[0].compare("SAVE") == 0))
     {
         // INPUTTING TURN VALUES
         if(vect.size() == 4)

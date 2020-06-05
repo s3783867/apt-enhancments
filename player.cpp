@@ -51,6 +51,12 @@ string Player::validateName(string playerName)
 {
     string validatedName = playerName;
     int playerNameLength = playerName.length();
+
+    if(playerNameLength > 5){
+        cout << "Invalid Input: Name can not be longer then 5 characters" << endl;
+        validatedName = inputPlayerName();
+        validatedName = validateName(validatedName);
+    }
     
     for(int i = 0; i < playerNameLength; i++)
     {
