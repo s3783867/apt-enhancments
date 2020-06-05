@@ -98,6 +98,10 @@ void FloorLine::displayFloorLine()
             cout << printTile(deductions[i]->getTile());
             cout << " ";
         }
+        else
+        {
+            cout << "\u25A2 ";
+        }
     } 
 }
 

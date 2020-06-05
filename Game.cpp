@@ -45,7 +45,7 @@ void Game::newGame()
 void Game::playerTurn(Player* player)
 {
     // PRINT PLAYER TURN NAME
-    cout << "TURN FOR PLAYER: " << player->getName() << endl;
+    cout << "TURN FOR PLAYER: " << print_as_color<ansi_color_code::bright_green>(player->getName()) << endl;
 
     // DISPLAY FACTORIES
     cout << "Factories:" << endl;
@@ -54,7 +54,9 @@ void Game::playerTurn(Player* player)
     cout << endl;
 
     // DISPLAY MOSAIC
-    cout << "Mosaic for " << player->getName() << ":" << endl;
+    int otherPlayer = (playerIterator + 1) % 2;
+    cout << "Mosaic for: " << print_as_color<ansi_color_code::bright_green>(player->getName()) << ":" << "                ";
+    cout << "Mosaic for opponent: " << print_as_color<ansi_color_code::red>(players->players[otherPlayer]->getName()) << endl;
     displayMosaic(player);
     cout << endl;
 
@@ -395,35 +397,45 @@ bool Game::isTurnValid(Player* player)
             isTurnValid(player);
             turnValidated = true;
         }
-        else if(action.compare("HELP") == 0)
+        else if(action.compare("help") == 0)
         {
-            cout << "Here are all the commands:" << endl;
+            cout << "Here are all the possible commands:" << endl;
+            //check if patternlines are full
+            /*
+            if(player->getPatternLines()->isPatternLineFull(player->getPatternLines()->getPatternLine(1)) || 
+                player->getPatternLines()->isPatternLineFull(player->getPatternLines()->getPatternLine(2)) || 
+                player->getPatternLines()->isPatternLineFull(player->getPatternLines()->getPatternLine(3)) ||
+                player->getPatternLines()->isPatternLineFull(player->getPatternLines()->getPatternLine(4)) ||
+                player->getPatternLines()->isPatternLineFull(player->getPatternLines()->getPatternLine(5)))
+                {
+                }
+            */
+            if(!centreFactory->isCentreFactoryEmpty())
+            {
+                cout << "To take a tile from the centre factory: " << endl;
+                cout << "turn <0> <colour> <storage row>" << endl;
+            }
+            if(!factory->areFactoriesEmpty())
+            {
+                cout << "To take a tile from the factories: " << endl;
+                cout << "turn <factory> <colour> <storage row>" << endl;
+            }
             cout << "To display other player game state: " << endl;
             cout << "display" << endl;
             cout << "To save the current game:" << endl;
             cout << "save <file name>" << endl;
             cout << "To make a turn:" << endl;
-            cout << "turn <factory> <colour> <storage row>" << endl;
             cout << "To intentionally break a tile:" << endl;
             cout << "turn <factory> <colour> <b>" << endl;
 
 
             cout << "Possible turns: " << endl;
-            //check which factories are free
-            
-        }
-        else if(action.compare("DISPLAY") == 0)
-        {
-            cout << "Displaying other player board:" << endl;
-            int otherPlayer = (playerIterator + 1) % 2;
-            // DISPLAY MOSAIC
-            cout << "Mosaic for " << players->players[otherPlayer]->getName() << ":" << endl;
-            displayMosaic(players->players[otherPlayer]);
-            cout << endl;
             isTurnValid(player);
             turnValidated = true;
+            //check if factories are all empty
+            //check if centre factory are all empty
+            
         }
-        
         else if(action.compare("TURN") == 0)
         {
             
@@ -706,6 +718,18 @@ bool Game::getTurn()
         exit(1);
     }
 
+    if(s.compare("help") == 0)
+    {
+        *actionPtr = s;
+        turnGot = true;
+    }
+
+    if(s.compare("display") == 0)
+    {
+        *actionPtr = s;
+        turnGot = true;
+    }
+    if(!turnGot){
     // BREAK INPUT INTO PARTS
     string word = ""; 
     for (auto x : s) 
@@ -772,9 +796,7 @@ bool Game::getTurn()
     // TODO: POSSIBLE MORE CONSTRAINTS
     if((vect.size() == 4 && vect[0].compare("TURN") == 0 && isdigit(vect[1][0]) && isalpha(vect[2].front()) && (isdigit(vect[3][0]) 
         || vect[3].compare("B") == 0 )) 
-        || (vect.size() == 2 && vect[0].compare("SAVE") == 0) 
-        || (vect.size() == 1 && vect[0].compare("DISPLAY") == 0) 
-        || (vect.size() == 1 && vect[0].compare("HELP") == 0))
+        || (vect.size() == 2 && vect[0].compare("SAVE") == 0))
     {
         // INPUTTING TURN VALUES
         if(vect.size() == 4)
@@ -807,7 +829,7 @@ bool Game::getTurn()
                     }
                 }
             } 
-            
+        }
             turnGot = true;
         }
 
@@ -838,21 +860,21 @@ bool Game::getTurn()
             *actionPtr = vect[0];
             turnGot = true;
         }
-        
-    }
 
-    // DISPLAY ERROR MESSAGE FOR INCORRECT TURN
-    else
-    {
-        cout << "aInvalid Input: (Breach of valid inputs)" << endl << endl << 
-        "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl <<
-        "A Turn = \"turn <factory> <colour> <storage row>\"" << endl << 
-        "~~~~~~~~~~~~~~~~~~~~~~~ or ~~~~~~~~~~~~~~~~~~~~~~" << endl << 
-        "     A Break = \"turn <factory> <colour> <b>\"   " << endl <<
-        "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
+        // DISPLAY ERROR MESSAGE FOR INCORRECT TURN
+        else
 
-        getTurn();
-        turnGot = true;
+        {
+            cout << "Invalid Input: (Breach of valid inputs)" << endl << endl << 
+            "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl <<
+            "A Turn = \"turn <factory> <colour> <storage row>\"" << endl << 
+            "~~~~~~~~~~~~~~~~~~~~~~~ or ~~~~~~~~~~~~~~~~~~~~~~" << endl << 
+            "     A Break = \"turn <factory> <colour> <b>\"   " << endl <<
+            "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
+
+            getTurn();
+            turnGot = true;
+        }
     }
     return turnGot;
 }
@@ -919,6 +941,8 @@ void Game::aRound()
 
 void Game::displayMosaic(Player* player)
 {
+    //get opponents number in players array
+    int otherPlayer = (playerIterator + 1) % 2;
     for(int outterLoop = 0; outterLoop < 5; outterLoop++)
     {
         // Displaying pattern line number
@@ -940,12 +964,12 @@ void Game::displayMosaic(Player* player)
             }
             else
             {
-                cout << ". ";
+                cout << "\u25A2 ";
             }
         }
         
         // Pattern Line and Wall Separation
-        cout << "|| ";
+        cout << "\u2192 ";
         
         // Display Wall
         for(int wallInnerLoop = 0; wallInnerLoop < WALL_COLUMNS; wallInnerLoop ++)
@@ -956,14 +980,59 @@ void Game::displayMosaic(Player* player)
             }
             else
             {
-                cout << " " << player->getWall()->getTileColourForWallPosition(outterLoop + 1, wallInnerLoop);
+                cout << " " << printTile(player->getWall()->getTileColourForWallPosition(outterLoop + 1, wallInnerLoop));
             }
         }
+        //display opponent game stat
+        cout << "    \u254F    ";
+        //display pattern line
+        // Displaying pattern line number
+        cout << (outterLoop + 1);
+        cout << ": ";
+        
+        // Placing extra dots 
+        for(int extraSpaces = (4 - outterLoop); extraSpaces > 0; extraSpaces--)
+        {
+            cout << "  ";
+        }
+
+        // Display Pattern Line
+        for(int patternLineInnerLoop = 0; patternLineInnerLoop <= outterLoop; patternLineInnerLoop++)
+        {
+            if(players->players[otherPlayer]->getPatternLines()->getPatternLine(outterLoop + 1)[outterLoop - patternLineInnerLoop] != nullptr)
+            {
+                cout << printTile(players->players[otherPlayer]->getPatternLines()->getPatternLine(outterLoop + 1)[outterLoop - patternLineInnerLoop]->getTile()) << " ";
+            }
+            else
+            {
+                cout << "\u25A2 ";
+            }
+        }
+        
+        // Pattern Line and Wall Separation
+        cout << "\u2192 ";
+
+        // display mosaic
+        for(int wallInnerLoop = 0; wallInnerLoop < WALL_COLUMNS; wallInnerLoop++)
+            {
+                if(players->players[otherPlayer]->getWall()->tile[outterLoop][wallInnerLoop] != nullptr)
+                {
+                    cout << " " << printTile(players->players[otherPlayer]->getWall()->tile[outterLoop][wallInnerLoop]->getTile());
+                }
+                else
+                {
+                    cout << " " << printTile(players->players[otherPlayer]->getWall()->getTileColourForWallPosition(outterLoop + 1, wallInnerLoop));
+                }
+                
+            }
         cout << endl;
     }
 
     cout << "broken: ";
     player->getFloorLine()->displayFloorLine();
+    cout << "       \u254F    ";
+    cout << "broken: ";
+    players->players[otherPlayer]->getFloorLine()->displayFloorLine();
 }
 
 void Game::moveTileToWall(Player* player, int lineNumber)

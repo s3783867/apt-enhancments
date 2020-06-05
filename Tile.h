@@ -28,6 +28,7 @@ enum class ansi_color_code: int{
     white=37,
     bright_black = 90,
     bright_cyan=96,
+    bright_green=92,
 };
 
 template<ansi_color_code color,typename printable>
@@ -50,7 +51,17 @@ template<typename printable>
         colouredTile = print_as_color<ansi_color_code::yellow>(tile);
     }else if(tile=='U'){
         colouredTile = print_as_color<ansi_color_code::bright_black>(tile);
-    }else {
+    } else if(tile == 'r'){
+        colouredTile = print_as_color<ansi_color_code::red>('.');
+    } else if(tile == 'b'){
+        colouredTile = print_as_color<ansi_color_code::blue>('.');
+    } else if(tile == 'l'){
+        colouredTile = print_as_color<ansi_color_code::bright_cyan>('.');
+    } else if(tile == 'y'){
+        colouredTile = print_as_color<ansi_color_code::yellow>('.');
+    } else if(tile == 'u'){
+        colouredTile = print_as_color<ansi_color_code::bright_black>('.');
+    } else {
         colouredTile = print_as_color<ansi_color_code::magenta>(tile);
     }
  return colouredTile;
