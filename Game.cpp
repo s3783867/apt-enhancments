@@ -804,12 +804,12 @@ bool Game::getTurn()
                     }
                 }
             } 
-        }
+            
             turnGot = true;
         }
 
         // INPUTTING SAVE GAME VALUES 
-        else if(vect.size() == 2)
+        else
         {
             for(int i = 0; i < 2; i++)
             {
@@ -825,17 +825,8 @@ bool Game::getTurn()
             
             turnGot = true;
         }
-        else if(vect.size() == 1 && vect[0].compare("DISPLAY") == 0)
-        {
-            *actionPtr = vect[0];
-            turnGot = true;
-        }
-        else if(vect.size() == 1 && vect[0].compare("HELP") == 0)
-        {
-            *actionPtr = vect[0];
-            turnGot = true;
-        }
-
+        
+    }
         // DISPLAY ERROR MESSAGE FOR INCORRECT TURN
         else
 
